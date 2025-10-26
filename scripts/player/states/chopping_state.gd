@@ -1,5 +1,5 @@
-# idle_state.gd
-class_name IdleState
+# chopping_state.gd
+class_name ChoppingState
 extends State
 
 @export var player: Player
@@ -15,18 +15,14 @@ func on_exit() -> void:
 
 
 func on_process(_delta: float) -> void:
-	if _is_moving():
-		var walk_state = state_machine.get_node("Walk") as WalkState
-		if walk_state:
-			transit_to(walk_state)
-			return
+	if not animated_sprite:
+		push_error("State '%s' has no assigned 'AnimatedSprite2D' reference." % get_state_name())
+		return
 	
-	if GameInput.primary_action():
-		_handle_primary_action()
-
-
-static func _is_moving() -> bool:
-	return GameInput.get_input().length() > 0
+	if !animated_sprite.is_playing():
+		var idle_state = state_machine.get_node("Idle") as IdleState
+		if idle_state:
+			transit_to(idle_state)
 
 
 func _play_animation() -> void:
@@ -38,7 +34,7 @@ func _play_animation() -> void:
 		push_error("State '%s' has no assigned 'Player' reference." % get_state_name())
 		return
 	
-	animated_sprite.play(AnimationUtil.get_animation_name("idle", player.current_direction))
+	animated_sprite.play(AnimationUtil.get_animation_name("chopping", player.current_direction))
 
 
 func _stop_animation() -> void:
@@ -47,13 +43,3 @@ func _stop_animation() -> void:
 		return
 	
 	animated_sprite.stop()
-
-
-func _handle_primary_action():
-	if not player.current_tool:
-		return
-
-	if player.current_tool.name == "Axe":
-		var chopping_state = state_machine.get_node("Chopping") as ChoppingState
-		if chopping_state:
-			transit_to(chopping_state)
