@@ -38,6 +38,7 @@ func _register_states() -> void:
 func _on_state_transition(target_state_class: GDScript) -> void:
 	if target_state_class not in states:
 		push_error("State not found: " + str(target_state_class))
+		return
 	_change_state(states[target_state_class])
 
 

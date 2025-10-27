@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ToolResource" load_steps=2 format=3 uid="uid://cy1t1yfbgtjen"]
+
+[ext_resource type="Script" uid="uid://bh1smbsxpb6pq" path="res://scripts/resources/tools/tool_resource.gd" id="1_ylvcl"]
+
+[resource]
+script = ExtResource("1_ylvcl")
+name = "Watering Can"
+animation_prefix = "watering"
+metadata/_custom_type_script = "uid://bh1smbsxpb6pq"

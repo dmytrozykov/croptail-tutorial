@@ -50,10 +50,13 @@ func _stop_animation() -> void:
 
 
 func _handle_primary_action():
+	if not player:
+		push_error("State '%s' has no assigned 'Player' reference." % get_state_name())
+		return
+	
 	if not player.current_tool:
 		return
 
-	if player.current_tool.name == "Axe":
-		var chopping_state = state_machine.get_node("Chopping") as ChoppingState
-		if chopping_state:
-			transit_to(chopping_state)
+	var tool_use_state = state_machine.get_node("ToolUse") as ToolUseState
+	if tool_use_state:
+		transit_to(tool_use_state)

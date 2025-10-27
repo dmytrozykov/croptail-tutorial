@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="ToolResource" load_steps=2 format=3 uid="uid://p1ihyqmv4b3c"]
+[gd_resource type="Resource" script_class="ToolResource" load_steps=3 format=3 uid="uid://p1ihyqmv4b3c"]
 
-[ext_resource type="Script" uid="uid://bh1smbsxpb6pq" path="res://scripts/resources/tool_resource.gd" id="1_o1xek"]
+[ext_resource type="Script" uid="uid://mnaeljvrfxw" path="res://scripts/resources/tools/axe_action.gd" id="1_dkv6c"]
+[ext_resource type="Script" uid="uid://bh1smbsxpb6pq" path="res://scripts/resources/tools/tool_resource.gd" id="1_o1xek"]
 
 [resource]
 script = ExtResource("1_o1xek")
 name = "Axe"
+animation_prefix = "chopping"
+action_script = ExtResource("1_dkv6c")
 metadata/_custom_type_script = "uid://bh1smbsxpb6pq"

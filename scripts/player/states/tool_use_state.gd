@@ -1,5 +1,5 @@
-# chopping_state.gd
-class_name ChoppingState
+# tool_use_state.gd
+class_name ToolUseState
 extends State
 
 @export var player: Player
@@ -11,6 +11,7 @@ func on_enter() -> void:
 
 
 func on_exit() -> void:
+	_activate_tool()
 	_stop_animation()
 
 
@@ -34,7 +35,11 @@ func _play_animation() -> void:
 		push_error("State '%s' has no assigned 'Player' reference." % get_state_name())
 		return
 	
-	animated_sprite.play(AnimationUtil.get_animation_name("chopping", player.current_direction))
+	if not player.current_tool:
+		push_error("'Player' has not current tool.")
+		return
+	
+	animated_sprite.play(AnimationUtil.get_animation_name(player.current_tool.animation_prefix, player.current_direction))
 
 
 func _stop_animation() -> void:
@@ -43,3 +48,14 @@ func _stop_animation() -> void:
 		return
 	
 	animated_sprite.stop()
+
+
+func _activate_tool() -> void:
+	if not player:
+		push_error("State '%s' has no assigned 'Player' reference." % get_state_name())
+		return
+	
+	if not player.current_tool:
+		push_error("'Player' has not current tool.")
+		return
+	player.current_tool.activate(player)
